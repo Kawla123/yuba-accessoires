@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/*
+ * Direction visuelle : palette beige/blush chaud avec accent doré (photo de
+ * référence fournie par l'utilisateur — bijouterie premium, fond crème
+ * rosé, lumière dorée). --color-ink sert désormais de brun profond chaud
+ * (texte principal, sections sombres ponctuelles), plus le bleu marine
+ * froid des débuts du projet. --color-cobalt/--color-silver restent
+ * définis mais quasi inutilisés dans cette direction plus chaude.
+ */
+:root {
+  --color-cream: #f6ece2;
+  --color-cream-2: #ecdbc9;
+  --color-ink: #3a2b22;
+  --color-ink-2: #4a382c;
+  --color-charcoal: #3d2f26;
+  --color-gold: #b3893f;
+  --color-gold-dim: #8a6a30;
+  --color-cobalt: #3a5ceb;
+  --color-silver: #c7c9ce;
+  --color-border: #e6d5c0;
+}
+
+@theme inline {
+  --color-cream: var(--color-cream);
+  --color-cream-2: var(--color-cream-2);
+  --color-ink: var(--color-ink);
+  --color-ink-2: var(--color-ink-2);
+  --color-charcoal: var(--color-charcoal);
+  --color-gold: var(--color-gold);
+  --color-gold-dim: var(--color-gold-dim);
+  --color-cobalt: var(--color-cobalt);
+  --color-silver: var(--color-silver);
+  --color-border: var(--color-border);
+
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-sans: var(--font-jost), "Jost", sans-serif;
+
+  --ease-yuba: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Angles droits partout, aucune exception. */
+  --radius-none: 0;
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-2xl: 0;
+  --radius-3xl: 0;
+  --radius-full: 0;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-cream);
+}
+
+/* Effet Ken Burns (zoom lent) pour la photo de repli du hero, tant
+   qu'aucune séquence de frames n'est disponible. Figé sous
+   prefers-reduced-motion. */
+@keyframes kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 16s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns {
+    animation: none;
+  }
+}
+
+/* Bandeau défilant du ticker maison : boucle sans à-coup car le contenu
+   est dupliqué une fois (translation de -50% = exactement un tour). */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 26s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation-play-state: paused;
+  }
+}
+

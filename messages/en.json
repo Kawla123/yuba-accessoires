@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "workshop": "The workshop",
+    "contact": "Contact",
+    "cart": "Cart",
+    "account": "My account"
+  },
+  "footer": {
+    "tagline": "Handmade jewelry and accessories from Djerba",
+    "shipping": "Shipping across Tunisia",
+    "codBadge": "Cash on delivery",
+    "returnsBadge": "14-day returns",
+    "rights": "All rights reserved"
+  },
+  "home": {
+    "heroTitle": "Djerba craftsmanship,\nworn every day",
+    "heroSubtitle": "Jewelry handcrafted in our workshop in Houmt Souk.",
+    "heroCta": "Discover the collection",
+    "heroCtaSecondary": "Our workshop"
+  },
+  "common": {
+    "comingSoon": "Coming soon"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "workshop": "L'atelier",
+    "contact": "Contact",
+    "cart": "Panier",
+    "account": "Mon compte"
+  },
+  "footer": {
+    "tagline": "Bijoux et accessoires faits main à Djerba",
+    "shipping": "Livraison en Tunisie",
+    "codBadge": "Paiement à la livraison",
+    "returnsBadge": "Retour sous 14 jours",
+    "rights": "Tous droits réservés"
+  },
+  "home": {
+    "heroTitle": "L'artisanat de Djerba,\nporté au quotidien",
+    "heroSubtitle": "Bijoux façonnés à la main dans notre atelier de Houmt Souk.",
+    "heroCta": "Découvrir la collection",
+    "heroCtaSecondary": "Notre atelier"
+  },
+  "common": {
+    "comingSoon": "Bientôt disponible"
+  }
+}
