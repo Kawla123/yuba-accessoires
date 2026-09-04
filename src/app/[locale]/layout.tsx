@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { Analytics } from "@/components/site/Analytics";
 import { ToastProvider } from "@/components/ToastProvider";
 import { FlyingDotsLayer } from "@/components/cart/FlyingDotsLayer";
 import "../globals.css";
@@ -105,6 +106,7 @@ export default async function LocaleLayout({
           <ToastProvider />
           <FlyingDotsLayer />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
