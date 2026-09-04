@@ -8,6 +8,7 @@ import {
   ShoppingBag,
   Package,
   Users,
+  Star,
   Menu,
   X,
   type LucideIcon,
@@ -18,10 +19,17 @@ const NAV_ITEMS: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
   { href: "/admin/commandes", label: "Commandes", icon: ShoppingBag },
   { href: "/admin/produits", label: "Produits", icon: Package },
+  { href: "/admin/avis", label: "Avis", icon: Star },
   { href: "/admin/clients", label: "Clients", icon: Users },
 ];
 
-export function AdminSidebar({ newOrdersCount }: { newOrdersCount: number }) {
+export function AdminSidebar({
+  newOrdersCount,
+  pendingReviewsCount,
+}: {
+  newOrdersCount: number;
+  pendingReviewsCount: number;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -62,6 +70,7 @@ export function AdminSidebar({ newOrdersCount }: { newOrdersCount: number }) {
               items={NAV_ITEMS}
               isActive={isActive}
               newOrdersCount={newOrdersCount}
+              pendingReviewsCount={pendingReviewsCount}
               onNavigate={() => setOpen(false)}
             />
             <div className="mt-auto border-t border-cream/10 pt-4">
@@ -76,7 +85,12 @@ export function AdminSidebar({ newOrdersCount }: { newOrdersCount: number }) {
         <Link href="/admin" className="mb-8 px-2 font-serif text-xl text-cream italic">
           Yuba Admin
         </Link>
-        <SidebarNav items={NAV_ITEMS} isActive={isActive} newOrdersCount={newOrdersCount} />
+        <SidebarNav
+          items={NAV_ITEMS}
+          isActive={isActive}
+          newOrdersCount={newOrdersCount}
+          pendingReviewsCount={pendingReviewsCount}
+        />
         <div className="mt-auto border-t border-cream/10 pt-4">
           <LogoutButton />
         </div>
@@ -89,18 +103,26 @@ function SidebarNav({
   items,
   isActive,
   newOrdersCount,
+  pendingReviewsCount,
   onNavigate,
 }: {
   items: typeof NAV_ITEMS;
   isActive: (href: string) => boolean;
   newOrdersCount: number;
+  pendingReviewsCount: number;
   onNavigate?: () => void;
 }) {
   return (
     <nav className="flex flex-col gap-1">
       {items.map((item) => {
         const active = isActive(item.href);
-        const showBadge = item.href === "/admin/commandes" && newOrdersCount > 0;
+        const badgeCount =
+          item.href === "/admin/commandes"
+            ? newOrdersCount
+            : item.href === "/admin/avis"
+              ? pendingReviewsCount
+              : 0;
+        const showBadge = badgeCount > 0;
         return (
           <Link
             key={item.href}
@@ -116,7 +138,7 @@ function SidebarNav({
             <span className="flex-1">{item.label}</span>
             {showBadge ? (
               <span className="flex h-5 min-w-5 items-center justify-center bg-gold px-1.5 font-sans text-xs text-ink">
-                {newOrdersCount}
+                {badgeCount}
               </span>
             ) : null}
           </Link>

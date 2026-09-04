@@ -36,6 +36,7 @@ export type ShopProduct = {
 };
 
 export type ShopProductDetail = ShopProduct & {
+  id: string;
   descriptionFr: string | null;
   variants: { id: string; name: string; priceDelta: number; stockQuantity: number }[];
 };
@@ -278,6 +279,7 @@ export async function getProductsByGender(
 }
 
 type ProductDetailRow = {
+  id: string;
   slug: string;
   name_fr: string;
   description_fr: string | null;
@@ -299,7 +301,7 @@ export async function getProductDetailBySlug(slug: string): Promise<ShopProductD
       const { data, error } = await supabase
         .from("products")
         .select(
-          "slug, name_fr, description_fr, price_tnd, compare_at_price_tnd, is_new, stock_quantity, categories(name_fr), product_images(r2_key, position), product_variants(id, name, price_delta, stock_quantity)",
+          "id, slug, name_fr, description_fr, price_tnd, compare_at_price_tnd, is_new, stock_quantity, categories(name_fr), product_images(r2_key, position), product_variants(id, name, price_delta, stock_quantity)",
         )
         .eq("slug", slug)
         .eq("is_active", true)
@@ -312,6 +314,7 @@ export async function getProductDetailBySlug(slug: string): Promise<ShopProductD
           .sort((a, b) => a.position - b.position)
           .map((img) => getPublicUrl(img.r2_key));
         return {
+          id: data.id,
           slug: data.slug,
           name: data.name_fr,
           descriptionFr: data.description_fr,
@@ -339,6 +342,7 @@ export async function getProductDetailBySlug(slug: string): Promise<ShopProductD
   if (demoIndex === -1) return null;
   const demo = demoProducts[demoIndex];
   return {
+    id: "",
     ...demoProductToShop(demo, demoIndex),
     descriptionFr: null,
     variants: [],

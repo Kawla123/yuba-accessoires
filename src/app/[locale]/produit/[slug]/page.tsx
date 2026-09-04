@@ -3,7 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { getProductDetailBySlug } from "@/lib/queries/products";
+import { getApprovedReviewsForProduct, getReviewFormState } from "@/lib/queries/reviews";
 import { ProductPurchasePanel } from "@/components/shop/ProductPurchasePanel";
+import { ProductReviewsSection } from "@/components/shop/ProductReviewsSection";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yuba-bijoux.com";
 
@@ -47,6 +49,11 @@ export default async function ProductPage({
     notFound();
   }
 
+  const [reviews, reviewFormState] = await Promise.all([
+    getApprovedReviewsForProduct(product.id),
+    getReviewFormState(product.id),
+  ]);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -85,6 +92,14 @@ export default async function ProductPage({
 
         <ProductPurchasePanel product={product} />
       </div>
+
+      <ProductReviewsSection
+        locale={locale}
+        slug={slug}
+        productId={product.id}
+        reviews={reviews}
+        formState={reviewFormState}
+      />
     </main>
   );
 }

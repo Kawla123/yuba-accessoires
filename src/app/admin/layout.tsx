@@ -35,17 +35,33 @@ async function getNewOrdersCount(): Promise<number> {
   }
 }
 
+async function getPendingReviewsCount(): Promise<number> {
+  try {
+    const supabase = createAdminClient();
+    const { count } = await supabase
+      .from("reviews")
+      .select("id", { count: "exact", head: true })
+      .eq("is_approved", false);
+    return count ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const newOrdersCount = await getNewOrdersCount();
+  const [newOrdersCount, pendingReviewsCount] = await Promise.all([
+    getNewOrdersCount(),
+    getPendingReviewsCount(),
+  ]);
 
   return (
     <html lang="fr" className={jost.variable}>
       <body className="min-h-full antialiased">
-        <AdminSidebar newOrdersCount={newOrdersCount} />
+        <AdminSidebar newOrdersCount={newOrdersCount} pendingReviewsCount={pendingReviewsCount} />
         <div className="min-h-screen bg-cream-2 md:pl-64">{children}</div>
         <ToastProvider />
       </body>
